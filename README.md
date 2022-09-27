@@ -1,5 +1,9 @@
 # MinimalApiCrud
 
+## Nuget package
+
+You can use MinimalApiCrud installing the Nuget package from here [https://www.nuget.org/packages/MinimalApiCrud](https://www.nuget.org/packages/MinimalApiCrud)
+
 ## What is it?
 
 It's a very simple library that permit to create CRUD endpoints for your entities.  
