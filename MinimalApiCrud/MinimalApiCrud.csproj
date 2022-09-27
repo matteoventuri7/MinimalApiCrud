@@ -9,6 +9,8 @@
 		<Authors>Matteo Venturi</Authors>
 		<Company />
 		<Description>A library to create quickly CRUD endpoints.</Description>
+		<Title>Minimal API CRUD</Title>
+		<PackageProjectUrl>https://github.com/matteoventuri7/MinimalApiCrud</PackageProjectUrl>
 	</PropertyGroup>
 
 	<PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
@@ -21,6 +23,10 @@
 
 	<ItemGroup>
 		<FrameworkReference Include="Microsoft.AspNetCore.App" />
+	</ItemGroup>
+
+	<ItemGroup>
+	  <None Include="https:\github.com\matteoventuri7\MinimalApiCrud\blob\master\README.md" />
 	</ItemGroup>
 
 	<ItemGroup>
