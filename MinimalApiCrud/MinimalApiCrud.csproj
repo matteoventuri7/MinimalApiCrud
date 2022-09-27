@@ -13,20 +13,8 @@
 		<PackageProjectUrl>https://github.com/matteoventuri7/MinimalApiCrud</PackageProjectUrl>
 	</PropertyGroup>
 
-	<PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
-	  <CheckForOverflowUnderflow>False</CheckForOverflowUnderflow>
-	</PropertyGroup>
-
-	<PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
-	  <CheckForOverflowUnderflow>False</CheckForOverflowUnderflow>
-	</PropertyGroup>
-
 	<ItemGroup>
 		<FrameworkReference Include="Microsoft.AspNetCore.App" />
-	</ItemGroup>
-
-	<ItemGroup>
-	  <None Include="https:\github.com\matteoventuri7\MinimalApiCrud\blob\master\README.md" />
 	</ItemGroup>
 
 	<ItemGroup>
