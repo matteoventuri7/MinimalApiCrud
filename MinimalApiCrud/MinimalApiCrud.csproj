@@ -7,10 +7,13 @@
 		<GenerateDocumentationFile>False</GenerateDocumentationFile>
 		<GeneratePackageOnBuild>True</GeneratePackageOnBuild>
 		<Authors>Matteo Venturi</Authors>
-		<Company />
 		<Description>A library to create quickly CRUD endpoints.</Description>
 		<Title>Minimal API CRUD</Title>
 		<PackageProjectUrl>https://github.com/matteoventuri7/MinimalApiCrud</PackageProjectUrl>
+		<PackageLicenseExpression>MIT</PackageLicenseExpression>
+		<RepositoryUrl>https://github.com/matteoventuri7/MinimalApiCrud</RepositoryUrl>
+		<RepositoryType>git</RepositoryType>
+		<PackageTags>.net;dotnet;api;rest;crud;minimalapi,</PackageTags>
 	</PropertyGroup>
 
 	<ItemGroup>
