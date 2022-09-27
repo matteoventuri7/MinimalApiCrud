@@ -10,7 +10,7 @@ Keep in mind that this library try to offer a base set of CRUD endpoints. If you
 ## Methods
 
 *   MapCrud: initialize the library with the data model, the id data type and the data context.
-*   SetupMapping: configure the mapping between data model and view model.
+*   SetupMapping: configure the mapping between data model and view model. (for details see [https://github.com/MapsterMapper/Mapster](https://github.com/MapsterMapper/Mapster))
 *   GetAll: setup the Read endpoint. It's paginated.
 *   GetOneById: setup the single Read by id endpoint.
 *   Filter: setup the filters and the comparing logics to retrieve the results. (for details see [https://dynamic-linq.net/advanced-parse-lambda#dynamic-lambda)](https://dynamic-linq.net/advanced-parse-lambda#dynamic-lambda))
