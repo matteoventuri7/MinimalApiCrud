@@ -11,6 +11,7 @@ namespace MinimalApiCrud
 {
     public partial class MinimalApiCrudBuilder<Tmodel, Tid, Tcontext>
     {
+        public MinimalApiCrudBuilder<Tmodel, Tid, Tcontext> Insert(string? pattern = null, Func<RouteHandlerBuilder, RouteHandlerBuilder>? config = null) => Insert<Tmodel>(pattern, config);
         public MinimalApiCrudBuilder<Tmodel, Tid, Tcontext> Insert<Tentity>(string? pattern = null, Func<RouteHandlerBuilder, RouteHandlerBuilder>? config = null)
         {
             var builder = _enpoints.MapPost(pattern ?? $"/{typeof(Tmodel).Name.ToLowerInvariant()}", async (Tentity data) =>
@@ -21,7 +22,7 @@ namespace MinimalApiCrud
                 var model = data.Adapt<Tmodel>();
                 await _dbContext.AddAsync(model);
 
-                return Results.Created(string.Empty, model);
+                return Results.Created(string.Empty, model.Adapt<Tentity>());
             });
 
             if (config is not null)
@@ -30,6 +31,7 @@ namespace MinimalApiCrud
             return this;
         }
 
+        public MinimalApiCrudBuilder<Tmodel, Tid, Tcontext> Update(string? pattern = null, Func<RouteHandlerBuilder, RouteHandlerBuilder>? config = null) => Update<Tmodel>(pattern, config);
         public MinimalApiCrudBuilder<Tmodel, Tid, Tcontext> Update<Tentity>(string? pattern = null, Func<RouteHandlerBuilder, RouteHandlerBuilder>? config = null)
         {
             var builder = _enpoints.MapPut(pattern ?? $"/{typeof(Tmodel).Name.ToLowerInvariant()}", async (Tid id, Tentity data) =>
@@ -53,7 +55,7 @@ namespace MinimalApiCrud
 
             return this;
         }
-
+                
         public MinimalApiCrudBuilder<Tmodel, Tid, Tcontext> Delete(string? pattern = null, Func<RouteHandlerBuilder, RouteHandlerBuilder>? config = null)
         {
             var builder = _enpoints.MapDelete(pattern ?? $"/{typeof(Tmodel).Name.ToLowerInvariant()}", async (Tid id) =>
@@ -73,6 +75,8 @@ namespace MinimalApiCrud
 
             return this;
         }
+
+        public MinimalApiCrudBuilder<Tmodel, Tid, Tcontext> GetAll(string? pattern = null, Func<RouteHandlerBuilder, RouteHandlerBuilder>? config = null) => GetAll<Tmodel>(pattern, config);
 
         public MinimalApiCrudBuilder<Tmodel, Tid, Tcontext> GetAll<Tentity>(string? pattern = null, Func<RouteHandlerBuilder, RouteHandlerBuilder>? config = null)
         {
@@ -98,6 +102,8 @@ namespace MinimalApiCrud
             return this;
         }
 
+        public MinimalApiCrudBuilder<Tmodel, Tid, Tcontext> GetOneById(string? pattern = null, Func<RouteHandlerBuilder, RouteHandlerBuilder>? config = null) => GetOneById<Tmodel>(pattern, config);
+
         public MinimalApiCrudBuilder<Tmodel, Tid, Tcontext> GetOneById<Tentity>(string? pattern = null, Func<RouteHandlerBuilder, RouteHandlerBuilder>? config = null)
         {
             var builder = _enpoints.MapGet(pattern ?? $"/{typeof(Tmodel).Name.ToLowerInvariant()}/find", async (Tid id) =>
@@ -110,6 +116,9 @@ namespace MinimalApiCrud
 
             return this;
         }
+
+        public MinimalApiCrudBuilder<Tmodel, Tid, Tcontext> Filter(Dictionary<string, string> whereClauses, FilterLogic filterLogic, string? pattern = null,
+            Func<RouteHandlerBuilder, RouteHandlerBuilder>? config = null) => Filter<Tmodel>(whereClauses, filterLogic, pattern, config);
 
         public MinimalApiCrudBuilder<Tmodel, Tid, Tcontext> Filter<Tentity>(Dictionary<string, string> whereClauses, FilterLogic filterLogic, string? pattern = null,
             Func<RouteHandlerBuilder, RouteHandlerBuilder>? config = null)
@@ -159,6 +168,6 @@ namespace MinimalApiCrud
         {
             mappingConfig(TypeAdapterConfig<Tsource, Tdest>.ForType());
             return this;
-        }        
+        }
     }
 }

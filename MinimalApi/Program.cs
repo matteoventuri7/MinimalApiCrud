@@ -42,20 +42,31 @@ using (var scope = app.Services.CreateScope())
     db.Dispose();
 }
 
-using var minimalApiCrudBuilder =
+using var minimalApiCrudBuilderWithViewModel =
     app.MapCrud<WeatherForecast, int, WeatherForecastContext>()
     .SetupMapping<WeatherForecast, WeatherForecastViewModel>(x =>
         x.Map(dest => dest.DisplayDate,
             src => src.Date.ToLongDateString())
         .Map(dest => dest.Temperature,
                         src => src.TemperatureC + "°C"))
-    .GetAll<WeatherForecastViewModel>(config: x => x.WithName("GetWeatherForecast"))
-    .GetOneById<WeatherForecastViewModel>()
+    .GetAll<WeatherForecastViewModel>("/weatherforecast/list/view", config: x => x.WithName("GetWeatherForecastViewModel"))
+    .GetOneById<WeatherForecastViewModel>("/weatherforecast/one/view")
     .Filter<WeatherForecastViewModel>(new Dictionary<string, string> {
         {nameof(WeatherForecast.TemperatureC),$"{nameof(WeatherForecast.TemperatureC)} == @0" }, {nameof(WeatherForecast.Summary), $"{nameof(WeatherForecast.Summary)} == @0" } }
-        , FilterLogic.OR)
-    .Insert<WeatherForecastDto>()
-    .Update<WeatherForecastViewModel>()
+        , FilterLogic.OR, "/weatherforecast/filter/view")
+    .Insert<WeatherForecastDto>("/weatherforecast/view")
+    .Update<WeatherForecastViewModel>("/weatherforecast/view")
+    .Delete("/weatherforecast/view/{id:int}");
+
+using var minimalApiCrudBuilder =
+    app.MapCrud<WeatherForecast, int, WeatherForecastContext>()
+    .GetAll("/weatherforecast/list", config: x => x.WithName("GetWeatherForecast"))
+    .GetOneById("/weatherforecast/one")
+    .Filter(new Dictionary<string, string> {
+        {nameof(WeatherForecast.TemperatureC),$"{nameof(WeatherForecast.TemperatureC)} == @0" }, {nameof(WeatherForecast.Summary), $"{nameof(WeatherForecast.Summary)} == @0" } }
+        , FilterLogic.OR, "/weatherforecast/filter")
+    .Insert("/weatherforecast")
+    .Update("/weatherforecast")
     .Delete("/weatherforecast/{id:int}");
 
 
