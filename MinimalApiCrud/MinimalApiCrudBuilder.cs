@@ -14,16 +14,7 @@ namespace MinimalApiCrud
         public MinimalApiCrudBuilder<Tmodel, Tid, Tcontext> Insert(string? pattern = null, Func<RouteHandlerBuilder, RouteHandlerBuilder>? config = null) => Insert<Tmodel>(pattern, config);
         public MinimalApiCrudBuilder<Tmodel, Tid, Tcontext> Insert<Tentity>(string? pattern = null, Func<RouteHandlerBuilder, RouteHandlerBuilder>? config = null)
         {
-            var builder = _enpoints.MapPost(pattern ?? $"/{typeof(Tmodel).Name.ToLowerInvariant()}", async (Tentity data) =>
-            {
-                if (data is null)
-                    return Results.BadRequest();
-
-                var model = data.Adapt<Tmodel>();
-                await _dbContext.AddAsync(model);
-
-                return Results.Created(string.Empty, model.Adapt<Tentity>());
-            });
+            var builder = _enpoints.MapPost(pattern ?? $"/{typeof(Tmodel).Name.ToLowerInvariant()}", InsertImpl<Tentity>);
 
             if (config is not null)
                 config(builder);

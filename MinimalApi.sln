@@ -3,9 +3,11 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.3.32901.215
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MinimalApi", "MinimalApi\MinimalApi.csproj", "{B805E632-2B2B-478D-8442-32F2B285C345}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MinimalApi", "MinimalApi\MinimalApi.csproj", "{B805E632-2B2B-478D-8442-32F2B285C345}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MinimalApiCrud", "MinimalApiCrud\MinimalApiCrud.csproj", "{0BE2B22F-A8FB-4F0A-B92A-7C0D28257B0B}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MinimalApiCrud", "MinimalApiCrud\MinimalApiCrud.csproj", "{0BE2B22F-A8FB-4F0A-B92A-7C0D28257B0B}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MinimalApiCrud.Test", "MinimalApiCrud.Test\MinimalApiCrud.Test.csproj", "{53EC39E5-C47B-4B7C-B405-E0495E6DCA2C}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -21,6 +23,10 @@ Global
 		{0BE2B22F-A8FB-4F0A-B92A-7C0D28257B0B}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{0BE2B22F-A8FB-4F0A-B92A-7C0D28257B0B}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{0BE2B22F-A8FB-4F0A-B92A-7C0D28257B0B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{53EC39E5-C47B-4B7C-B405-E0495E6DCA2C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{53EC39E5-C47B-4B7C-B405-E0495E6DCA2C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{53EC39E5-C47B-4B7C-B405-E0495E6DCA2C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{53EC39E5-C47B-4B7C-B405-E0495E6DCA2C}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

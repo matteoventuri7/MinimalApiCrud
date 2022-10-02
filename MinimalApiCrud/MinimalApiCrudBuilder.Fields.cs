@@ -6,7 +6,7 @@ namespace MinimalApiCrud
     public partial class MinimalApiCrudBuilder<Tmodel, Tid, Tcontext> : IDisposable
         where Tid : struct
         where Tmodel : class, IEntity<Tid>
-        where Tcontext : IDataContext<Tmodel>
+        where Tcontext : class, IDataContext<Tmodel>
     {
         private readonly IDataContext<Tmodel> _dbContext;
         private readonly IEndpointRouteBuilder _enpoints;
@@ -15,8 +15,17 @@ namespace MinimalApiCrud
         public MinimalApiCrudBuilder(IEndpointRouteBuilder endpoints)
         {
             _enpoints = endpoints;
-            _serviceScope = endpoints.ServiceProvider.CreateScope();
-            _dbContext = _serviceScope.ServiceProvider.GetRequiredService<Tcontext>();
+            var serviceScopeFactory = (IServiceScopeFactory)endpoints.ServiceProvider.GetService(typeof(IServiceScopeFactory))!;
+            if (serviceScopeFactory is null)
+            {
+                throw new InvalidOperationException("Service scope factory not found.");
+            }
+            _serviceScope = serviceScopeFactory.CreateScope();
+            _dbContext = (Tcontext)_serviceScope.ServiceProvider.GetService(typeof(Tcontext))!;
+            if(_dbContext is null)
+            {
+                throw new InvalidOperationException("Data context service not found");
+            }
         }
 
         public void Dispose()
