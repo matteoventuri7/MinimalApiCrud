@@ -1,51 +1,25 @@
 ﻿namespace MinimalApiCrud.Test
 {
-    internal class TestDataContext : IDataContext<TestModel>
+    public class TestDataContext : IDataContext<TestModel>
     {
-        private HashSet<TestModel> _data;
-
-        public TestDataContext(int seedDataCount)
+        public virtual ValueTask<int> AddAsync(TestModel model)
         {
-            SeedData(seedDataCount);
+            return ValueTask.FromResult(0);
         }
 
-        private void SeedData(int seedDataCount)
+        public virtual ValueTask<int> RemoveAsync(TestModel model)
         {
-            _data = new HashSet<TestModel>(seedDataCount);
-            var rnd = new Random((int)DateTime.UtcNow.Ticks);
-
-            for (int i = 1; i <= seedDataCount; i++)
-            {
-                _data.Add(new TestModel(i, "test" + i, rnd.NextDouble() * 10, rnd.Next(0, 2) == 0));
-            }
+            return ValueTask.FromResult(0);
         }
 
-        public ValueTask<int> AddAsync(TestModel model)
+        public virtual IQueryable<TestModel> Set<T>() where T : class
         {
-            var countPreAdd = _data.Count;
-            _data.Add(model);
-            return ValueTask.FromResult(_data.Count - countPreAdd);
+            return null!;
         }
 
-        public ValueTask<int> RemoveAsync(TestModel model)
+        public virtual ValueTask<int> UpdateAsync(TestModel model)
         {
-            var removed = _data.Remove(model);
-            if (!removed)
-            {
-                throw new Exception("Not found");
-            }
-            return ValueTask.FromResult(1);
-        }
-
-        public IQueryable<TestModel> Set<T>() where T : class
-        {
-            return _data.AsQueryable();
-        }
-
-        public async ValueTask<int> UpdateAsync(TestModel model)
-        {
-            await RemoveAsync(model);
-            return await AddAsync(model);
+            return ValueTask.FromResult(0);
         }
     }
 }

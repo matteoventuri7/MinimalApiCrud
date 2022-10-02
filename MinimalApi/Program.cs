@@ -53,7 +53,7 @@ using var minimalApiCrudBuilderWithViewModel =
     .GetOneById<WeatherForecastViewModel>("/weatherforecast/one/view")
     .Filter<WeatherForecastViewModel>(new Dictionary<string, string> {
         {nameof(WeatherForecast.TemperatureC),$"{nameof(WeatherForecast.TemperatureC)} == @0" }, {nameof(WeatherForecast.Summary), $"{nameof(WeatherForecast.Summary)} == @0" } }
-        , FilterLogic.OR, "/weatherforecast/filter/view")
+        , FilterLogic.OR, "/weatherforecast/filter/view", c=>c.WithName("Filter weather"))
     .Insert<WeatherForecastDto>("/weatherforecast/view")
     .Update<WeatherForecastViewModel>("/weatherforecast/view")
     .Delete("/weatherforecast/view/{id:int}");

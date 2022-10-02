@@ -8,24 +8,17 @@ namespace MinimalApiCrud
         where Tmodel : class, IEntity<Tid>
         where Tcontext : class, IDataContext<Tmodel>
     {
-        private readonly IDataContext<Tmodel> _dbContext;
+        private Tcontext GetDataContextService { get => (Tcontext)_serviceScope.ServiceProvider.GetService(typeof(Tcontext))!; }
         private readonly IEndpointRouteBuilder _enpoints;
         private readonly IServiceScope _serviceScope;
+        private Dictionary<string, string> _filterWhereClauses = null!;
+        private FilterLogic _filterLogic;
 
         public MinimalApiCrudBuilder(IEndpointRouteBuilder endpoints)
         {
             _enpoints = endpoints;
             var serviceScopeFactory = (IServiceScopeFactory)endpoints.ServiceProvider.GetService(typeof(IServiceScopeFactory))!;
-            if (serviceScopeFactory is null)
-            {
-                throw new InvalidOperationException("Service scope factory not found.");
-            }
             _serviceScope = serviceScopeFactory.CreateScope();
-            _dbContext = (Tcontext)_serviceScope.ServiceProvider.GetService(typeof(Tcontext))!;
-            if(_dbContext is null)
-            {
-                throw new InvalidOperationException("Data context service not found");
-            }
         }
 
         public void Dispose()

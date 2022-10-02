@@ -1,6 +1,6 @@
 ﻿namespace MinimalApiCrud.Test
 {
-    internal class TestModel : IEntity<int>, IEquatable<TestModel>
+    public class TestModel : IEntity<int>, IEquatable<TestModel>
     {
         public TestModel(int id, string name, double number, bool result)
         {
