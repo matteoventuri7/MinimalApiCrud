@@ -2,7 +2,7 @@
 
 namespace MinimalApiCrud.Test
 {
-    internal class TestModelComparer : IEqualityComparer<TestModel>
+    internal class TestModelComparer : IEqualityComparer<TestModel?>
     {
         public bool Equals(TestModel? x, TestModel? y)
         {

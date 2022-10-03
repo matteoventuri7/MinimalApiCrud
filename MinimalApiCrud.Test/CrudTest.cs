@@ -1,3 +1,4 @@
+using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Routing;
 using Microsoft.Extensions.DependencyInjection;
@@ -8,7 +9,7 @@ namespace MinimalApiCrud.Test
 {
     public abstract class CrudTest
     {
-        protected readonly IEqualityComparer<TestModel> TestModelComparer = new TestModelComparer();
+        protected readonly IEqualityComparer<TestModel?> TestModelComparer = new TestModelComparer();
 
         protected MinimalApiCrudBuilder<TestModel, int, TestDataContext> SetupMock(out Mock<TestDataContext> mockedDataContext)
         {
