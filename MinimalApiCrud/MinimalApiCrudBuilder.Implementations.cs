@@ -36,8 +36,8 @@ namespace MinimalApiCrud
             if (modelDB is null)
                 return Results.NotFound(id);
 
-            data.Adapt<Tentity, Tmodel>(modelDB);
-            await ctx.UpdateAsync(modelDB);
+            var toUpdate = data.Adapt(modelDB);
+            await ctx.UpdateAsync(toUpdate);
 
             return Results.Ok();
         }

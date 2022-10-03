@@ -42,17 +42,12 @@ namespace MinimalApiCrud.Test
             return builder;
         }
 
-        #region Insert
+        protected void SeedDataContext(Mock<TestDataContext> mContext, IEnumerable<TestModel> testModels)
+        {
+            mContext.Setup(x => x.Set<TestModel>()).Returns(testModels.AsQueryable());
+        }
 
-        
-
-        #endregion
-
-        #region Delete
-
-        
-
-        #endregion
+        protected T Clone<T>(T toClone) => JsonSerializer.Deserialize<T>(JsonSerializer.Serialize<T>(toClone))!;
 
         protected async ValueTask<int> GetResponse(IResult result)
         {
