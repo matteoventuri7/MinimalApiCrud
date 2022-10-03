@@ -13,7 +13,7 @@ namespace MinimalApiCrud.Test
             var builder = SetupMock(out var mContext);
             SeedDataContext(mContext, dataset);
 
-            var result = await builder.GetAllImpl<TestModel>()!;
+            var result = await builder.GetAllImpl<TestModel>(null, null)!;
 
             Assert.Equal(dataset, result, TestModelComparer);
 

@@ -55,7 +55,7 @@ namespace MinimalApiCrud
             return Results.NoContent();
         }
 
-        public async Task<IEnumerable<Tentity>> GetAllImpl<Tentity>(int? pageNumber = null, int? pageSize = null)
+        public async Task<IEnumerable<Tentity>> GetAllImpl<Tentity>(int? pageNumber, int? pageSize)
         {
             if (pageNumber is not null && pageSize is not null)
             {
