@@ -7,7 +7,7 @@ You can use MinimalApiCrud installing the Nuget package from here [https://www.n
 ## What is it?
 
 It's a very simple library that permit to create CRUD endpoints for your entities.  
-It works with .NET Minimal API and .NET 6
+It works with .NET Minimal API and .NET 6 and the implementation is covered by unit tests at 100%
 
 Keep in mind that this library try to offer a base set of CRUD endpoints. If you need to customize something you have to write your endpoint.
 
