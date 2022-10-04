@@ -1,6 +1,6 @@
 # MinimalApiCrud
 
-## Nuget package
+## Nuget package ![Nuget](https://img.shields.io/nuget/dt/MinimalApiCrud)
 
 You can use MinimalApiCrud installing the Nuget package from here [https://www.nuget.org/packages/MinimalApiCrud](https://www.nuget.org/packages/MinimalApiCrud)
 
