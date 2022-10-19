@@ -4,7 +4,6 @@ using Microsoft.Extensions.DependencyInjection;
 namespace MinimalApiCrud
 {
     public partial class MinimalApiCrudBuilder<Tmodel, Tid, Tcontext> : IDisposable
-        where Tid : struct
         where Tmodel : class, IEntity<Tid>
         where Tcontext : class, IDataContext<Tmodel>
     {

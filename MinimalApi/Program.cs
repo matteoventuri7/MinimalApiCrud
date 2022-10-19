@@ -43,7 +43,7 @@ using (var scope = app.Services.CreateScope())
 }
 
 using var minimalApiCrudBuilderWithViewModel =
-    app.MapCrud<WeatherForecast, int, WeatherForecastContext>()
+    app.MapCrud<WeatherForecast, string?, WeatherForecastContext>()
     .SetupMapping<WeatherForecast, WeatherForecastViewModel>(x =>
         x.Map(dest => dest.DisplayDate,
             src => src.Date.ToLongDateString())
@@ -59,7 +59,7 @@ using var minimalApiCrudBuilderWithViewModel =
     .Delete("/weatherforecast/view/{id:int}");
 
 using var minimalApiCrudBuilder =
-    app.MapCrud<WeatherForecast, int, WeatherForecastContext>()
+    app.MapCrud<WeatherForecast, string?, WeatherForecastContext>()
     .GetAll("/weatherforecast/list", config: x => x.WithName("GetWeatherForecast"))
     .GetOneById("/weatherforecast/one")
     .Filter(new Dictionary<string, string> {
@@ -78,7 +78,7 @@ if (app.Environment.IsDevelopment())
 
 app.Run();
 
-public class WeatherForecast : IEntity<int>
+public class WeatherForecast : IEntity<string?>
 {
     public WeatherForecast()
     {
@@ -93,7 +93,7 @@ public class WeatherForecast : IEntity<int>
     }
 
     [Key]
-    public int Id { get; set; }
+    public string? Id { get; set; }
     public DateTime Date { get; set; }
     public int TemperatureC { get; set; }
     public int TemperatureF => 32 + (int)(TemperatureC / 0.5556);
