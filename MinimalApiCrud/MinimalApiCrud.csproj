@@ -14,7 +14,7 @@
 		<RepositoryUrl>https://github.com/matteoventuri7/MinimalApiCrud</RepositoryUrl>
 		<RepositoryType>git</RepositoryType>
 		<PackageTags>.net;dotnet;api;rest;crud;minimalapi,</PackageTags>
-		<Version>1.1.1</Version>
+		<Version>1.2.0</Version>
 	</PropertyGroup>
 
 	<ItemGroup>
