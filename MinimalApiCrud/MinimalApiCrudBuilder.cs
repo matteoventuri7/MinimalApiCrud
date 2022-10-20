@@ -38,10 +38,12 @@ namespace MinimalApiCrud
             return this;
         }
 
-        public MinimalApiCrudBuilder<Tmodel, Tid, Tcontext> GetAll(string? pattern = null, Func<RouteHandlerBuilder, RouteHandlerBuilder>? config = null) => GetAll<Tmodel>(pattern, config);
+        public MinimalApiCrudBuilder<Tmodel, Tid, Tcontext> GetAll(string? pattern = null, IResponseAdapter? responseAdapter = null, Func<RouteHandlerBuilder, RouteHandlerBuilder>? config = null) => GetAll<Tmodel>(pattern, responseAdapter, config);
 
-        public MinimalApiCrudBuilder<Tmodel, Tid, Tcontext> GetAll<Tentity>(string? pattern = null, Func<RouteHandlerBuilder, RouteHandlerBuilder>? config = null)
+        public MinimalApiCrudBuilder<Tmodel, Tid, Tcontext> GetAll<Tentity>(string? pattern = null, IResponseAdapter? responseAdapter = null, Func<RouteHandlerBuilder, RouteHandlerBuilder>? config = null)
         {
+            _getAllResponseAdapter = _getAllResponseAdapter ?? responseAdapter!;
+
             var builder = _enpoints.MapGet(pattern ?? $"/{typeof(Tmodel).Name.ToLowerInvariant()}/list", GetAllImpl<Tentity>);
 
             if (config is not null)
@@ -63,13 +65,16 @@ namespace MinimalApiCrud
         }
 
         public MinimalApiCrudBuilder<Tmodel, Tid, Tcontext> Filter(Dictionary<string, string> whereClauses, FilterLogic filterLogic, string? pattern = null,
-            Func<RouteHandlerBuilder, RouteHandlerBuilder>? config = null) => Filter<Tmodel>(whereClauses, filterLogic, pattern, config);
+            IResponseAdapter? responseAdapter = null,
+            Func<RouteHandlerBuilder, RouteHandlerBuilder>? config = null) => Filter<Tmodel>(whereClauses, filterLogic, pattern, responseAdapter, config);
 
         public MinimalApiCrudBuilder<Tmodel, Tid, Tcontext> Filter<Tentity>(Dictionary<string, string> whereClauses, FilterLogic filterLogic, string? pattern = null,
+            IResponseAdapter? responseAdapter = null,
             Func<RouteHandlerBuilder, RouteHandlerBuilder>? config = null)
         {
             _filterWhereClauses = whereClauses;
             _filterLogic = filterLogic;
+            _filterResponseAdapter = _filterResponseAdapter ?? responseAdapter!;
 
             var builder = _enpoints.MapGet(pattern ?? $"/{typeof(Tmodel).Name.ToLowerInvariant()}/filter", FilterImpl<Tentity>);
 

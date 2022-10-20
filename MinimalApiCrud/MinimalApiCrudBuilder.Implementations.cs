@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Primitives;
+using System.Collections.Generic;
 using System.Linq.Dynamic.Core;
 using System.Linq.Expressions;
 
@@ -55,20 +56,35 @@ namespace MinimalApiCrud
             return Results.NoContent();
         }
 
-        public async Task<IEnumerable<Tentity>> GetAllImpl<Tentity>(int? pageNumber, int? pageSize)
+        public async Task<IResponse> GetAllImpl<Tentity>(int? pageNumber, int? pageSize)
         {
+            IEnumerable<Tentity> items;
+            int totalCount = 0;
+
             if (pageNumber is not null && pageSize is not null)
             {
-                return await Task.Factory.StartNew(() => GetDataContextService.Set<Tmodel>()
+                items = await Task.Factory.StartNew(() =>
+                {
+                    totalCount = GetDataContextService.Set<Tmodel>().Count();
+                    return GetDataContextService.Set<Tmodel>()
                         .Skip((pageNumber.Value - 1) * pageSize.Value)
                         .Take(pageSize.Value)
                         .ProjectToType<Tentity>()
-                        .ToArray());
+                        .ToArray();
+                });
+            }
+            else
+            {
+                items = await Task.Factory.StartNew(() =>
+                {
+                    totalCount = GetDataContextService.Set<Tmodel>().Count();
+                    return GetDataContextService.Set<Tmodel>()
+                        .ProjectToType<Tentity>()
+                        .ToArray();
+                });
             }
 
-            return await Task.Factory.StartNew(() => GetDataContextService.Set<Tmodel>()
-                        .ProjectToType<Tentity>()
-                        .ToArray());
+            return _getAllResponseAdapter.GetResult(items, totalCount);
         }
 
         public async Task<Tentity?> GetOneByIdImpl<Tentity>(Tid id)
@@ -76,7 +92,7 @@ namespace MinimalApiCrud
             return await LoadOneById<Tentity>(GetDataContextService, id);
         }
 
-        public async Task<IEnumerable<Tentity>> FilterImpl<Tentity>(QueryStringRequest request)
+        public async Task<IResponse> FilterImpl<Tentity>(QueryStringRequest request)
         {
             var q = GetDataContextService.Set<Tmodel>();
 
@@ -106,9 +122,17 @@ namespace MinimalApiCrud
                 q = q.Where(fullClause, expressions.ToArray());
             }
 
-            return await Task.Factory.StartNew(() => q
+            int totalCount = 0;
+
+            var items = await Task.Factory.StartNew(() =>
+            {
+                totalCount = q.Count();
+                return q
                     .ProjectToType<Tentity>()
-                    .ToArray());
+                    .ToArray();
+            });
+
+            return _filterResponseAdapter.GetResult(items, totalCount);
         }
     }
 }

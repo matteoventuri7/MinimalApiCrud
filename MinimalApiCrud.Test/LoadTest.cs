@@ -15,9 +15,9 @@ namespace MinimalApiCrud.Test
 
             var result = await builder.GetAllImpl<TestModel>(null, null)!;
 
-            Assert.Equal(dataset, result, TestModelComparer);
+            Assert.Equal(dataset, result.Items.OfType<TestModel>(), TestModelComparer);
 
-            mContext.Verify(x => x.Set<TestModel>(), Times.Once);
+            mContext.Verify(x => x.Set<TestModel>(), Times.Exactly(2));
         }
 
         [Theory]
@@ -34,9 +34,9 @@ namespace MinimalApiCrud.Test
 
             var result = await builder.GetAllImpl<TestModel>(nPage, pageSize)!;
 
-            Assert.Equal(dataset.Skip((nPage - 1) * pageSize).Take(pageSize).ToArray(), result.ToArray(), TestModelComparer);
+            Assert.Equal(dataset.Skip((nPage - 1) * pageSize).Take(pageSize), result.Items.OfType<TestModel>(), TestModelComparer);
 
-            mContext.Verify(x => x.Set<TestModel>(), Times.Once);
+            mContext.Verify(x => x.Set<TestModel>(), Times.Exactly(2));
         }
 
         [Fact]
@@ -96,8 +96,8 @@ namespace MinimalApiCrud.Test
                     {nameof(TestModel.Result), true.ToString() }, {nameof(TestModel.Number), 10.ToString() }
                 }));
 
-            var expectedData = dataset.Where(x => x.Result && x.Number <= 10).ToArray();
-            Assert.Equal(expectedData, result.ToArray(), TestModelComparer);
+            var expectedData = dataset.Where(x => x.Result && x.Number <= 10);
+            Assert.Equal(expectedData, result.Items.OfType<TestModel>(), TestModelComparer);
 
             mContext.Verify(x => x.Set<TestModel>(), Times.Once);
         }
@@ -128,8 +128,7 @@ namespace MinimalApiCrud.Test
                     {nameof(TestModel.Result), true.ToString() }, {nameof(TestModel.Number), int.MaxValue.ToString() }
                 }));
 
-            var expectedData = dataset.ToArray();
-            Assert.Equal(expectedData, result.ToArray(), TestModelComparer);
+            Assert.Equal(dataset, result.Items.OfType<TestModel>(), TestModelComparer);
 
             mContext.Verify(x => x.Set<TestModel>(), Times.Once);
         }

@@ -7,11 +7,14 @@ namespace MinimalApiCrud
         where Tmodel : class, IEntity<Tid>
         where Tcontext : class, IDataContext<Tmodel>
     {
+        private static readonly IResponseAdapter _defaultResponseAdapter = new DefaultResponseAdapter();
         private Tcontext GetDataContextService { get => (Tcontext)_serviceScope.ServiceProvider.GetService(typeof(Tcontext))!; }
         private readonly IEndpointRouteBuilder _enpoints;
         private readonly IServiceScope _serviceScope;
         private Dictionary<string, string> _filterWhereClauses = null!;
         private FilterLogic _filterLogic;
+        private IResponseAdapter _getAllResponseAdapter = _defaultResponseAdapter,
+                _filterResponseAdapter = _defaultResponseAdapter;
 
         public MinimalApiCrudBuilder(IEndpointRouteBuilder endpoints)
         {
