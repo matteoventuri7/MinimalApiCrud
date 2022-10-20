@@ -1,6 +1,8 @@
 # MinimalApiCrud
 
-## Nuget package ![Nuget](https://img.shields.io/nuget/dt/MinimalApiCrud)
+## Nuget package 
+
+![Nuget](https://img.shields.io/nuget/dt/MinimalApiCrud)
 
 You can use MinimalApiCrud installing the Nuget package from here [https://www.nuget.org/packages/MinimalApiCrud](https://www.nuget.org/packages/MinimalApiCrud)
 
@@ -10,6 +12,11 @@ It's a very simple library that permit to create CRUD endpoints for your entitie
 It works with .NET Minimal API and .NET 6 and the implementation is covered by unit tests at 100%
 
 Keep in mind that this library try to offer a base set of CRUD endpoints. If you need to customize something you have to write your endpoint.
+
+## Important change log
+
+**1.1.1 -> 1.2.0**  
+Methods "GetAll" and "Filter" now will return an object with the total count and the items instead of only the items.
 
 ## Methods
 
