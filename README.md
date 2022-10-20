@@ -1,6 +1,6 @@
 # MinimalApiCrud
 
-## Nuget package 
+## Nuget package
 
 ![Nuget](https://img.shields.io/nuget/dt/MinimalApiCrud)
 
@@ -14,6 +14,9 @@ It works with .NET Minimal API and .NET 6 and the implementation is covered by u
 Keep in mind that this library try to offer a base set of CRUD endpoints. If you need to customize something you have to write your endpoint.
 
 ## Important change log
+
+**1.2.0 -> 1.2.1**  
+Now "Filter" method had pagination!
 
 **1.1.1 -> 1.2.0**  
 Methods "GetAll" and "Filter" now will return an object with the total count and the items instead of only the items.
