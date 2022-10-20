@@ -8,17 +8,17 @@ using System.Linq.Expressions;
 
 namespace MinimalApiCrud
 {
-	public partial class MinimalApiCrudBuilder<Tmodel, Tid, Tcontext>
-	{
+    public partial class MinimalApiCrudBuilder<Tmodel, Tid, Tcontext>
+    {
         public async Task<IResult> InsertImpl<Tentity>(Tentity data)
-		{
+        {
             if (data is null)
                 return Results.BadRequest();
 
             var model = data.Adapt<Tmodel>();
             var addResult = await GetDataContextService.AddAsync(model);
 
-            if(addResult == 0)
+            if (addResult == 0)
             {
                 return Results.Conflict("No entity added");
             }
@@ -56,33 +56,19 @@ namespace MinimalApiCrud
             return Results.NoContent();
         }
 
-        public async Task<IResponse> GetAllImpl<Tentity>(int? pageNumber, int? pageSize)
+        public async Task<IResponse> GetAllImpl<Tentity>(int pageNumber = 1, int pageSize = int.MaxValue)
         {
-            IEnumerable<Tentity> items;
             int totalCount = 0;
 
-            if (pageNumber is not null && pageSize is not null)
-            {
-                items = await Task.Factory.StartNew(() =>
+            var items = await Task.Factory.StartNew(() =>
                 {
                     totalCount = GetDataContextService.Set<Tmodel>().Count();
                     return GetDataContextService.Set<Tmodel>()
-                        .Skip((pageNumber.Value - 1) * pageSize.Value)
-                        .Take(pageSize.Value)
+                        .Skip((pageNumber - 1) * pageSize)
+                        .Take(pageSize)
                         .ProjectToType<Tentity>()
                         .ToArray();
                 });
-            }
-            else
-            {
-                items = await Task.Factory.StartNew(() =>
-                {
-                    totalCount = GetDataContextService.Set<Tmodel>().Count();
-                    return GetDataContextService.Set<Tmodel>()
-                        .ProjectToType<Tentity>()
-                        .ToArray();
-                });
-            }
 
             return _getAllResponseAdapter.GetResult(items, totalCount);
         }
@@ -92,7 +78,7 @@ namespace MinimalApiCrud
             return await LoadOneById<Tentity>(GetDataContextService, id);
         }
 
-        public async Task<IResponse> FilterImpl<Tentity>(QueryStringRequest request)
+        public async Task<IResponse> FilterImpl<Tentity>(QueryStringRequest request, int pageNumber = 1, int pageSize = int.MaxValue)
         {
             var q = GetDataContextService.Set<Tmodel>();
 
@@ -126,10 +112,12 @@ namespace MinimalApiCrud
 
             var items = await Task.Factory.StartNew(() =>
             {
-                totalCount = q.Count();
+                totalCount = GetDataContextService.Set<Tmodel>().Count();
                 return q
-                    .ProjectToType<Tentity>()
-                    .ToArray();
+                        .Skip((pageNumber - 1) * pageSize)
+                        .Take(pageSize)
+                        .ProjectToType<Tentity>()
+                        .ToArray();
             });
 
             return _filterResponseAdapter.GetResult(items, totalCount);

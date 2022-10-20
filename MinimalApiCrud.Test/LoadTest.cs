@@ -13,8 +13,9 @@ namespace MinimalApiCrud.Test
             var builder = SetupMock(out var mContext);
             SeedDataContext(mContext, dataset);
 
-            var result = await builder.GetAllImpl<TestModel>(null, null)!;
+            var result = await builder.GetAllImpl<TestModel>()!;
 
+            Assert.Equal(dataset.Length, result.Count);
             Assert.Equal(dataset, result.Items.OfType<TestModel>(), TestModelComparer);
 
             mContext.Verify(x => x.Set<TestModel>(), Times.Exactly(2));
@@ -34,6 +35,7 @@ namespace MinimalApiCrud.Test
 
             var result = await builder.GetAllImpl<TestModel>(nPage, pageSize)!;
 
+            Assert.Equal(dataset.Length, result.Count);
             Assert.Equal(dataset.Skip((nPage - 1) * pageSize).Take(pageSize), result.Items.OfType<TestModel>(), TestModelComparer);
 
             mContext.Verify(x => x.Set<TestModel>(), Times.Exactly(2));
@@ -97,9 +99,11 @@ namespace MinimalApiCrud.Test
                 }));
 
             var expectedData = dataset.Where(x => x.Result && x.Number <= 10);
+
+            Assert.Equal(dataset.Length, result.Count);
             Assert.Equal(expectedData, result.Items.OfType<TestModel>(), TestModelComparer);
 
-            mContext.Verify(x => x.Set<TestModel>(), Times.Once);
+            mContext.Verify(x => x.Set<TestModel>(), Times.Exactly(2));
         }
 
         [Fact]
@@ -128,9 +132,10 @@ namespace MinimalApiCrud.Test
                     {nameof(TestModel.Result), true.ToString() }, {nameof(TestModel.Number), int.MaxValue.ToString() }
                 }));
 
+            Assert.Equal(dataset.Length, result.Count);
             Assert.Equal(dataset, result.Items.OfType<TestModel>(), TestModelComparer);
 
-            mContext.Verify(x => x.Set<TestModel>(), Times.Once);
+            mContext.Verify(x => x.Set<TestModel>(), Times.Exactly(2));
         }
     }
 }
