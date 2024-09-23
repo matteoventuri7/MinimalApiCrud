@@ -22,8 +22,8 @@
 	</ItemGroup>
 
 	<ItemGroup>
-	  <PackageReference Include="Mapster" Version="7.3.0" />
-	  <PackageReference Include="System.Linq.Dynamic.Core" Version="1.2.20" />
+	  <PackageReference Include="Mapster" Version="7.4.0" />
+	  <PackageReference Include="System.Linq.Dynamic.Core" Version="1.4.5" />
 	</ItemGroup>
 
 </Project>
