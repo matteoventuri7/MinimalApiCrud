@@ -15,6 +15,9 @@ Keep in mind that this library try to offer a base set of CRUD endpoints. If you
 
 ## Important change log
 
+**1.2.1 -> 1.3.0**
+Library upgrade
+
 **1.2.0 -> 1.2.1**  
 Now "Filter" method had pagination!
 
